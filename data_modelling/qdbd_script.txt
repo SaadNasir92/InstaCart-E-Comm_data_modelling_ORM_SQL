@@ -1,0 +1,32 @@
+orders
+-
+order_id INTEGER PK
+user_id INTEGER
+order_number INTEGER
+order_dow INTEGER
+order_hour_of_day INTEGER
+days_since_prior_order INTEGER
+
+products
+-
+product_id INTEGER PK
+product_name VARCHAR(150)
+aisle_id INTEGER FK >- aisles.aisle_id
+department_id INTEGER FK >- departments.department_id
+
+order_products
+-
+order_id  INTEGER PK FK >- orders.order_id
+product_id INTEGER PK FK >- products.product_id
+add_to_cart_order INTEGER
+reordered INTEGER
+
+aisles
+-
+aisle_id INTEGER PK
+aisle VARCHAR(60)
+
+departments
+-
+department_id INTEGER PK
+department VARCHAR(60)
