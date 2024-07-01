@@ -1,21 +1,3 @@
-select count(*) from products ;
-select count(*) from aisles ;
-select count(*) from departments ;
-select count(*) from orders o ;
-select count(*) from order_products op ;
-
-BEGIN;
-
-DROP TABLE IF EXISTS order_details_limited;
-
-CREATE TEMP TABLE order_details_limited AS 
-SELECT * 
-FROM order_details 
-LIMIT 50000;
-
-COMMIT;
-
-
 -- Create a temporary table that joins the orders, order_products, and products tables to get information about each order, 
 -- including the products that were purchased and their department and aisle information.
 -- o.order_id, o.order_number, o.order_dow, o.order_hour_of_day, o.days_since_prior_order, op.product_id, op.add_to_cart_order, op.reordered, p.product_name, p.aisle_id, p.department_id
@@ -94,18 +76,28 @@ commit;
 -- total number of unique products purchased, total number of products purchased on weekdays, 
 -- total number of products purchased on weekends, and average time of day products are ordered in each department. 
 
+create temp table product_behavior_analysis as
+select
+pos.product_id, 
+pos.product_name, 
+p.department_id, 
+d.department, 
+a.aisle_id, 
+a.aisle, 
+pos.total_orders, 
+pos.total_reorders, 
+pos.avg_add_to_cart, 
+dos.total_purchases, 
+dos.total_unique_purchases, 
+dos.weekday_total_orders, 
+dos.weekend_total_orders, 
+dos.avg_order_hr 
+from product_order_summary pos
+left join products p on p.product_id = pos.product_id
+left join departments d on d.department_id = p.department_id
+left join aisles a on a.aisle_id = p.aisle_id
+left join department_order_summary dos on dos.department_id = p.department_id
+; 
 
-
-
--- ***************************************************************************** --
--- If order detail temp table is limited to 100,000, then product details is at 30,624. 
-select sum(count) from (select count(*) from product_order_summary);
-select sum(count) from (select count(*) from order_details);
-
--- If order detail temp table is unlimited aka 32,640,698 then product details is at 49,678. 
-select sum(count) from (select count(*) from product_order_summary);
-select sum(count) from (select count(*) from order_details);
-select sum(count) from (select count(*) from department_order_summary);
-select sum(count) from (select count(*) from aisle_order_summary);
 
 
