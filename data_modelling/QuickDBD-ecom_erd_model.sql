@@ -1,15 +1,10 @@
-﻿-- Exported from QuickDBD: https://www.quickdatabasediagrams.com/
--- Link to schema: https://app.quickdatabasediagrams.com/#/d/Rx96jg
--- NOTE! If you have used non-SQL datatypes in your design, you will have to change these here.
-
-
-CREATE TABLE "orders" (
+﻿CREATE TABLE "orders" (
     "order_id" INTEGER   NOT NULL,
     "user_id" INTEGER   NOT NULL,
     "order_number" INTEGER   NOT NULL,
     "order_dow" INTEGER   NOT NULL,
     "order_hour_of_day" INTEGER   NOT NULL,
-    "days_since_prior_order" INTEGER   NOT NULL,
+    "days_since_prior_order" INTEGER,
     CONSTRAINT "pk_orders" PRIMARY KEY (
         "order_id"
      )
@@ -17,7 +12,7 @@ CREATE TABLE "orders" (
 
 CREATE TABLE "products" (
     "product_id" INTEGER   NOT NULL,
-    "product_name" VARCHAR(150)   NOT NULL,
+    "product_name" VARCHAR(255)   NOT NULL,
     "aisle_id" INTEGER   NOT NULL,
     "department_id" INTEGER   NOT NULL,
     CONSTRAINT "pk_products" PRIMARY KEY (
@@ -62,4 +57,3 @@ REFERENCES "orders" ("order_id");
 
 ALTER TABLE "order_products" ADD CONSTRAINT "fk_order_products_product_id" FOREIGN KEY("product_id")
 REFERENCES "products" ("product_id");
-
