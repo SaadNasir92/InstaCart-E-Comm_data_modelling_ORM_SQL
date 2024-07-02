@@ -20,7 +20,7 @@ The scope of this project includes:
 ## Methodology
 ![ERD Diagram](data_modelling/ERD_DIAGRAM.PNG)
 
-1. **Database Design**: Designed the database models using QuickDBD to create a structured and efficient schema.
+1. **Database Design**: Designed the database models using QuickDBD to create a structured and efficient schema following the normalization rules.
 2. **Data Transformation**: Used Python Pandas to read the CSV files, transform the data as necessary, and load it into the respective tables in the database.
 3. **Database Implementation**: Utilized Python ORM to run the QuickDBD models and manage database interactions.
 4. **Query Optimization**: Optimized SQL queries to handle the large volume of data, improving run times significantly.
